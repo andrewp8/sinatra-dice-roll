@@ -10,55 +10,50 @@ BetterErrors::Middleware.allow_ip!('0.0.0.0/0.0.0.0')
 
 
 get("/"){
-  "<h1>Dice Roll</h1>
-  <ul>
-    <li><a href='/dice/2/6' >Roll two 6-sided dice</a></li>
-    <li><a href='/dice/2/10' >Roll two 10-sided dice</a></li>
-    <li><a href='/dice/1/20' >Roll one 20-sided dice</a></li>
-    <li><a href='/dice/5/4' >Roll 5 4-sided dice</a></li>
-  </ul>
-  "
+  erb(:elephant, {:layout => :elephant})
 }
 
 get("/dice/2/6"){
-  first_die = rand(1..6)
-  second_die = rand(1..6)
-  sum = first_die+second_die
+  @rolls = []
+  2.times{
+    die = rand(2..6)
+    @rolls.push(die)
+  }
 
-  outcome = "You rolled a #{first_die} and a #{second_die} for a total of #{sum}"
-
-  "<h1>2d6</h1>
-  <p>#{outcome}</p>
-  <a href='/' >Home</a>"
+  erb(:two_six)
 }
 get("/dice/2/10"){
-  die_1 = rand(1..10)
-  die_2 = rand(1..10)
-  sum = die_1+die_2
+  @rolls = []
+  2.times{
+    die = rand(1..10)
+    @rolls.push(die)
+  }
 
-  outcome = "You rolled a #{die_1} and a #{die_2} for a total of #{sum}"
-
-  "<h1>2d10</h1>
-  <p>#{outcome}</p>
-  <a href='/' >Home</a>"
+  erb(:two_ten)
 }
 get("/dice/1/20"){
-  die = rand(1..20)
-  outcome = "You rolled a #{die}"
-  "<h1>1d20</h1>
-  <p>#{outcome}</p>
-  <a href='/' >Home</a>"
+  @rolls = []
+  1.times{
+    die = rand(1..20)
+    @rolls.push(die)
+  }
+  
+  erb(:one_twenty)
 }
 get("/dice/5/4"){
-  die_1 = rand(1..4)
-  die_2 = rand(1..4)
-  die_3 = rand(1..4)
-  die_4 = rand(1..4)
-  die_5 = rand(1..4)
-  sum = die_1+die_2+die_3+die_4+die_5
-  outcome = "You rolled a #{die_1}, #{die_2}, #{die_3}, #{die_4}, and #{die_5} for a total of #{sum}"
+  @rolls = []
+  5.times{
+    die = rand(1..4)
+    @rolls.push(die)
+  }
 
-  "<h1>5d4</h1>
-  <p>#{outcome}</p>
-  <a href='/' >Home</a>"
+  erb(:five_four)
+}
+get("/dice/100/6"){
+  @rolls=[]
+  100.times{
+    die = rand(1..6)
+    @rolls.push(die)
+  }
+  erb(:one_hundred_six)
 }
